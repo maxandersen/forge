@@ -22,8 +22,9 @@
 
 package org.jboss.seam.forge.shell.plugins;
 
-import static java.lang.annotation.ElementType.FIELD;
 import static java.lang.annotation.ElementType.METHOD;
+import static java.lang.annotation.ElementType.FIELD;
+import static java.lang.annotation.ElementType.TYPE;
 import static java.lang.annotation.ElementType.PARAMETER;
 
 import java.lang.annotation.Documented;
@@ -50,7 +51,7 @@ import org.jboss.seam.forge.project.Resource;
 @Qualifier
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ METHOD, FIELD, PARAMETER })
+@Target({ TYPE, METHOD, FIELD, PARAMETER })
 public @interface Current
 {
 

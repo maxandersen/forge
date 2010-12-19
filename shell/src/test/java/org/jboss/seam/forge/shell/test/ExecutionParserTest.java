@@ -49,7 +49,7 @@ public class ExecutionParserTest extends AbstractShellTest
       String packg = "com.example.good.package";
       queueInputLines(packg);
       getShell().execute("motp suppliedOption --package bad#$%package");
-      assertEquals(packg, plugin.suppliedOption);
+      assertEquals(packg, plugin.getSuppliedOption());
    }
 
    @Test
@@ -58,14 +58,14 @@ public class ExecutionParserTest extends AbstractShellTest
       String packg = "com.example.good.package";
       queueInputLines("another#$%bad($package", packg);
       getShell().execute("motp requiredOption");
-      assertEquals(packg, plugin.requiredOption);
+      assertEquals(packg, plugin.getRequiredOption());
    }
 
    @Test
    public void testOmittedOptionalBooleanDefaultsToFalse() throws Exception
    {
-      assertNull(plugin.booleanOptionOmitted);
+      assertNull(plugin.getBooleanOptionOmitted());
       getShell().execute("motp booleanOptionOmitted");
-      assertEquals(false, plugin.booleanOptionOmitted);
+      assertEquals(false, plugin.getBooleanOptionOmitted());
    }
 }

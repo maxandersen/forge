@@ -22,11 +22,14 @@
 package org.jboss.seam.forge.shell.project;
 
 import java.lang.annotation.Documented;
-import java.lang.annotation.ElementType;
 import java.lang.annotation.Inherited;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+
+import static java.lang.annotation.ElementType.TYPE;
+import static java.lang.annotation.ElementType.METHOD;
+import static java.lang.annotation.ElementType.FIELD;
 
 import javax.enterprise.context.NormalScope;
 
@@ -40,7 +43,7 @@ import javax.enterprise.context.NormalScope;
 @NormalScope
 @Inherited
 @Documented
-@Target(ElementType.TYPE)
+@Target({TYPE, METHOD, FIELD})  
 @Retention(value = RetentionPolicy.RUNTIME)
 public @interface ProjectScoped
 {

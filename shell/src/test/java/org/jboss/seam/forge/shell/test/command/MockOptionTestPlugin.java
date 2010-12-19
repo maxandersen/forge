@@ -35,33 +35,38 @@ import org.jboss.seam.forge.shell.plugins.Plugin;
  */
 @Named("motp")
 @Singleton
-public class MockOptionTestPlugin implements Plugin
-{
-   public String suppliedOption = "";
-   public String requiredOption = "";
-   public Boolean booleanOptionOmitted = null;
+public class MockOptionTestPlugin implements Plugin {
+	private String suppliedOption = "";
+	private String requiredOption = "";
+	private Boolean booleanOptionOmitted = null;
 
-   @Command("suppliedOption")
-   public void suppliedOption(@Option(name = "package",
-         description = "Your java package",
-         type = PromptType.JAVA_PACKAGE) final String option)
-   {
-      suppliedOption = option;
-   }
+	@Command("suppliedOption")
+	public void suppliedOption(
+			@Option(name = "package", description = "Your java package", type = PromptType.JAVA_PACKAGE) final String option) {
+		suppliedOption = option;
+	}
 
-   @Command("requiredOption")
-   public void requiredOption(@Option(name = "package",
-         required = true,
-         description = "Your java package",
-         type = PromptType.JAVA_PACKAGE) final String option)
-   {
-      requiredOption = option;
-   }
+	@Command("requiredOption")
+	public void requiredOption(
+			@Option(name = "package", required = true, description = "Your java package", type = PromptType.JAVA_PACKAGE) final String option) {
+		requiredOption = option;
+	}
 
-   @Command("booleanOptionOmitted")
-   public void booleanOptionOmitted(@Option(required = false,
-         description = "Some boolean flag") final boolean option)
-   {
-      booleanOptionOmitted = option;
-   }
+	@Command("booleanOptionOmitted")
+	public void booleanOptionOmitted(
+			@Option(required = false, description = "Some boolean flag") final boolean option) {
+		booleanOptionOmitted = option;
+	}
+
+	public String getSuppliedOption() {
+		return suppliedOption;
+	}
+
+	public String getRequiredOption() {
+		return requiredOption;
+	}
+
+	public Boolean getBooleanOptionOmitted() {
+		return booleanOptionOmitted;
+	}
 }
