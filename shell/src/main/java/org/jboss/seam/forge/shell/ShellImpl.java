@@ -255,26 +255,25 @@ public class ShellImpl implements Shell
       exitRequested = true;
    }
 
-   void doShell(@Observes final AcceptUserInput event)
-   {
-      String line = "";
-      try
-      {
-         reader.setPrompt(getPrompt());
-         while ((exitRequested != true) && ((line = readLine()) != null))
-         {
-            if (!"".equals(line))
-            {
-               execute(line);
-            }
-            reader.setPrompt(getPrompt());
-         }
-         println();
-      }
-      catch (IOException e)
-      {
-      }
-   }
+	void doShell(@Observes final AcceptUserInput event) {
+		String line = "";
+		reader.setPrompt(getPrompt());
+		while ((exitRequested != true)) {
+			try {
+				line = readLine();
+
+				if (line != null) {
+					if (!"".equals(line.trim())) {
+						execute(line);
+					}
+					reader.setPrompt(getPrompt());
+				}
+			} catch (Exception e) {
+				handleException(e);
+			}
+		}
+		println();
+	}
 
    @Override
    public String readLine() throws IOException
@@ -291,61 +290,69 @@ public class ShellImpl implements Shell
          execution = parser.parse(line);
          execution.verifyConstraints(this);
          execution.perform();
-      }
-      catch (NoSuchCommandException e)
+      } catch (NoSuchCommandException e)
+      // TODO: bad that exception is used for control-flow; should be handled by command plugin IMO.
       {
-         String s = execScript(line);
-         if (s.length() != 0)
-         {
-            println(s);
-         }
+          String s = execScript(line);
+          if (s.length() != 0)
+          {
+             println(s);
+          }
+       } catch (Exception e) {
+    	  handleException(e);
       }
-      catch (CommandExecutionException e)
-      {
-         println("[" + e.getCommand() + "] " + e.getMessage());
-         if (verbose)
-         {
-            e.printStackTrace();
-         }
-      }
-      catch (CommandParserException e)
-      {
-         println("[" + e.getCommand() + "] " + e.getMessage());
-         if (verbose)
-         {
-            e.printStackTrace();
-         }
-      }
-      catch (PluginExecutionException e)
-      {
-         println("[" + e.getPlugin() + "] " + e.getMessage());
-         if (verbose)
-         {
-            e.printStackTrace();
-         }
-      }
-      catch (ShellExecutionException e)
-      {
-         println(e.getMessage());
-         if (verbose)
-         {
-            e.printStackTrace();
-         }
-      }
-      catch (Exception e)
-      {
-         if (!verbose)
-         {
-            println("Exception encountered: " + e.getMessage() + " (type \"verbose on\" to enable stack traces)");
-         }
-         else
-         {
-            println("Exception encountered: (type \"verbose false\" to disable stack traces)");
-            e.printStackTrace();
-         }
-      }
+      
    }
 
+   private void handleException(Exception original) {
+	try {
+		throw original;
+	} catch (CommandExecutionException e)
+     {
+        println("[" + e.getCommand() + "] " + e.getMessage());
+        if (verbose)
+        {
+           e.printStackTrace();
+        }
+     }
+     catch (CommandParserException e)
+     {
+        println("[" + e.getCommand() + "] " + e.getMessage());
+        if (verbose)
+        {
+           e.printStackTrace();
+        }
+     }
+     catch (PluginExecutionException e)
+     {
+        println("[" + e.getPlugin() + "] " + e.getMessage());
+        if (verbose)
+        {
+           e.printStackTrace();
+        }
+     }
+     catch (ShellExecutionException e)
+     {
+        println(e.getMessage());
+        if (verbose)
+        {
+           e.printStackTrace();
+        }
+     }
+     catch (Exception e)
+     {
+        if (!verbose)
+        {
+           println("Exception encountered: " + e.getMessage() + " (type \"verbose on\" to enable stack traces)");
+        }
+        else
+        {
+           println("Exception encountered: (type \"verbose false\" to disable stack traces)");
+           e.printStackTrace();
+        }
+     }
+   }
+   
    private String execScript(final String script)
    {
 
