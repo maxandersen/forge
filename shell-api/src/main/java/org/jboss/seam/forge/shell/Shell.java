@@ -322,6 +322,12 @@ public interface Shell
     */
    Object getProperty(String name);
 
+   Object getProperty(String name, Object defaultValue);
+   
+   String getProperty(String name, String defaultValue);
+   
+   boolean getProperty(String name, boolean defaultValue);
+   
    /**
     * Reset the shell prompt to default.
     */

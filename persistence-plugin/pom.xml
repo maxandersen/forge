@@ -32,6 +32,19 @@
             <type>pom</type>
         </dependency>
 
+		<dependency>
+		 	<groupId>org.hibernate</groupId>
+        	<artifactId>hibernate-tools</artifactId>
+        	<version>3.4.0.Beta2</version>
+        </dependency>
+
+	<dependency>
+		<groupId>hsqldb</groupId>
+		<artifactId>hsqldb</artifactId>
+		<version>1.8.0.2</version>
+		<!-- <scope>test</scope>  -->
+	</dependency>
+        
         <!-- Test Dependencies -->
         <dependency>
             <groupId>org.jboss.seam.forge</groupId>

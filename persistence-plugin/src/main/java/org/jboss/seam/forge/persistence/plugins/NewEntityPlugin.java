@@ -55,7 +55,7 @@ import java.io.File;
  * 
  */
 @Singleton
-@Named("new-entity")
+@Named("new-entity") // if generates both view and entity should be named new-mvc-entity or something...; style could be attribute for doing it generic?
 @Topic("Project")
 @RequiresProject
 @RequiresFacet(PersistenceFacet.class)

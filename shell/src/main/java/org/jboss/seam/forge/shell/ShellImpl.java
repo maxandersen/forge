@@ -561,6 +561,25 @@ public class ShellImpl implements Shell
    {
       return properties.get(name);
    }
+   
+   @Override
+   public Object getProperty(final String name, Object defaultValue) {
+      Object val = properties.get(name);
+      return val==null?defaultValue:val;
+   }
+   
+   @Override
+   public String getProperty(final String name, String defaultValue) {
+      Object val = properties.get(name);
+      return val==null?defaultValue:((String)val);
+   }
+   
+   @Override
+   public boolean getProperty(final String name, boolean defaultValue) {
+      Object val = properties.get(name);
+      return val==null?defaultValue:((Boolean)val).booleanValue();
+   }
+   
 
    @Override
    public Map<String, Object> getProperties()
